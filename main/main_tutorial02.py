@@ -15,14 +15,15 @@ data = t.load_csv("../dataset/glass.csv")
 
 # split into input and output elements
 X, y = t.split_input_output(data)
+print(y)
 
 # label encode the target variable
 y_transform = t.label_encode(y)
+print(y_transform)
 
 # summarize distribution
 counter = t.create_summarize(y_transform)
 print(counter)
-
 
 # print summarize
 t.print_summarize(y, counter)
@@ -57,12 +58,10 @@ t.create_plot_bar(counter)
 '''
 example of oversampling a multi-class classification dataset with a custom strategy
 '''
-print('example of oversampling a multi-class classification dataset with a custom strategy')
+print('\nexample of oversampling a multi-class classification dataset with a custom strategy')
 
 # transform the dataset
 strategy = {0: 100, 1: 100, 2: 200, 3: 200, 4: 200, 5: 200}
-
-# transform the dataset
 oversample = t.create_over_sampling('smote', ss=strategy)
 
 # create pipeline
@@ -111,7 +110,7 @@ steps = [model]
 pipeline = t.create_pipeline(steps)
 
 # evaluate model
-parameters = (10, 30, 'accuracy')
+parameters = (5, 3, 'accuracy')
 t.evaluate(pipeline, X, y_transform, parameters)
 
 '''
@@ -130,5 +129,28 @@ steps = [model]
 pipeline = t.create_pipeline(steps)
 
 # evaluate model
-parameters = (10, 30, 'accuracy')
+parameters = (5, 3, 'accuracy')
 t.evaluate(pipeline, X, y_transform, parameters)
+
+'''
+Random Forest Classifier evaluated on imbalanced dataset with method oversampling
+'''
+methods = ['smote', 'borderline_smote', 'svm_smote', 'adasyn']
+
+for o in methods:
+    print('\nRandom Forest Classifier tree evaluated on imbalanced dataset with {} oversampling'.format(o))
+
+    # over-sampling
+    oversample = t.create_over_sampling('smote')
+
+    # create model
+    parameters = (1000, None)
+    model = t.create_model('random_forest_classifier', parameters)
+
+    # create pipeline
+    steps = [oversample, model]
+    pipeline = t.create_pipeline(steps)
+
+    # evaluate model
+    parameters = (5, 3, 'accuracy')
+    t.evaluate(pipeline, X, y_transform, parameters)
