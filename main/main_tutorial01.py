@@ -81,7 +81,7 @@ steps = [model]
 pipeline = t.create_pipeline(steps)
 
 # evaluate model
-t.evaluate(pipeline, X_original, y_original)
+t.evaluate(pipeline, X_original, y_original, 10, 30, 'roc_auc')
 
 '''
 Decision tree evaluated on imbalanced dataset with method oversampling
@@ -100,7 +100,7 @@ for o in methods:
     pipeline = t.create_pipeline(steps)
 
     # evaluate model
-    t.evaluate(pipeline, X_original, y_original)
+    t.evaluate(pipeline, X_original, y_original, 10, 30, 'roc_auc')
 
 
 '''
@@ -123,7 +123,7 @@ for o in methods:
     pipeline = t.create_pipeline(steps)
 
     # evaluate model
-    t.evaluate(pipeline, X_original, y_original)
+    t.evaluate(pipeline, X_original, y_original, 10, 30, 'roc_auc')
 
 '''
 Grid search k value for method oversampling and random undersampling for imbalanced classification
@@ -145,4 +145,4 @@ for o in methods:
         pipeline = t.create_pipeline(steps)
 
         # evaluate model
-        t.evaluate(pipeline, X_original, y_original, k)
+        t.evaluate(pipeline, X_original, y_original, 10, 30, 'roc_auc', k)

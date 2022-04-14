@@ -88,7 +88,7 @@ class Tutorial:
 
 
     # evaluate
-    def evaluate(self, pipeline, X, y, k=5):
-        cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=30, random_state=1)
-        scores = cross_val_score(pipeline, X, y, scoring='roc_auc', cv=cv, n_jobs=-1)
-        print('k = {}, Mean ROC AUC: {:.2f}% ({:.2f}%)'.format(k, (mean(scores) * 100), (std(scores) * 100)))
+    def evaluate(self, pipeline, X, y, n_splits, n_repeats, scoring, k=5):
+        cv = RepeatedStratifiedKFold(n_splits=n_splits, n_repeats=n_repeats, random_state=1)
+        scores = cross_val_score(pipeline, X, y, scoring=scoring, cv=cv, n_jobs=-1)
+        print('k = {}, Mean {}: {:.2f}% ({:.2f}%)'.format(k, scoring, (mean(scores) * 100), (std(scores) * 100)))
